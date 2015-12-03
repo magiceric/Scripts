@@ -11,3 +11,5 @@ Useful on mobile phones.
 
 For Alexander Baskinov.
 
+3. English/uploadHomework.py
+Small python script to get english homework fron ya.disk and download it to nginx folder. (To easy access from mobile devices)
