@@ -4,7 +4,7 @@ import shutil
 import os
 import datetime
 
-rootpath = $ENGLISH_PATH
+rootpath = os.environ['$ENGLISH_PATH']
 files = [
 	{
 		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=jDY08AP3zoSUx80EWqOBhduCV9KPdOMM41xsUOmKI7o%3D&path=%2Fhomework%2Frevision%2Fvocabulary%2Fpractice-and-check.html',
