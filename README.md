@@ -27,10 +27,15 @@ cat merge.csv | python3 partition.py 2 __id__ '","' 'UPDATE wm2.catalog_good SET
 45
 33
 ```
+
 `2` - partiton size (how many ids should be in 1 update)
+
 `__id__` - string to replace in STRING_TO_INSERT_DATA
+
 `'","'` - delimeter
+
 `UPDATE wm2.catalog_good SET yml_id=7841 WHERE yml_id=2816 AND own_id IN ("__id__"); COMMIT;'` - string where we place our ids from `merge.csv`, at place marked as `__id__` with delimeter `'","'` splitted by 2 elements
+
 ####Result
 File with content like:
 ```sql
