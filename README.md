@@ -45,7 +45,7 @@ UPDATE wm2.catalog_good SET yml_id=7841 WHERE yml_id=2816 AND own_id IN ("33"); 
 ```
 
 ##tail-via-http.sh
-Emulate tail over http. To get updateble data via http& Useful if you have access to logs only over http. 
+Emulate tail over http. To get updatable data via http. Useful if you have access to logs only over http. 
 ####Usage
 ```bash
 ./tail-via-http.sh http://server.io/access.log OFFSET UPDATE_TIME
@@ -60,7 +60,7 @@ You have log on server http://server.io/access.log
 
 `30000` - offset in 30000 bytes
 
-`1` - file will be update every 1 second
+`1` - file will update every 1 second
 
 #####Result
 You viewing file updates in realtime. Like you use `tail -f` command
