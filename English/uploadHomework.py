@@ -7,22 +7,36 @@ import datetime
 rootpath = os.environ['ENGLISH_PATH']
 files = [
 	{
-		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=jDY08AP3zoSUx80EWqOBhduCV9KPdOMM41xsUOmKI7o%3D&path=%2Fhomework%2Frevision%2Fvocabulary%2Fpractice-and-check.html',
-		'path': '',
+		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=jDY08AP3zoSUx80EWqOBhduCV9KPdOMM41xsUOmKI7o%253D&path=%2Fhomework%2Fvocabulary%2Fpractice-and-check.html',
+		'path': 'div/',
 		'filename': 'vocabulary.html'
 	},
 	{
-		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=jDY08AP3zoSUx80EWqOBhduCV9KPdOMM41xsUOmKI7o%3D&path=%2Fhomework%2Frevision%2Fpronunciation%2FDasha%2Fpractice-and-check.html',
-		'path': 'dasha/',
-		'filename': 'pronunciation.html'
+		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=jDY08AP3zoSUx80EWqOBhduCV9KPdOMM41xsUOmKI7o%253D&path=%2Fhomework%2Fpronunciation%2FDasha%2Fpractice-and-check.html',
+		'path': 'div/',
+		'filename': 'daria.html'
 	},
 	{
-		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=jDY08AP3zoSUx80EWqOBhduCV9KPdOMM41xsUOmKI7o%3D&path=%2Fhomework%2Frevision%2Fpronunciation%2FSlava%2Fpractice-and-check.html',
-		'path': 'slava/',
-		'filename': 'pronunciation.html'
+		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=jDY08AP3zoSUx80EWqOBhduCV9KPdOMM41xsUOmKI7o%253D&path=%2Fhomework%2Fpronunciation%2FSlava%2Fpractice-and-check.html',
+		'path': 'div/',
+		'filename': 'slava.html'
+	},
+	{
+		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=DhLa7f6nRVrD8AZj9EGmFkyE8goTvQr0vPDb6WsdgtQ%3D&path=%2Fhomework%2Fvocabulary%2Fpractice-and-check.html',
+		'path': 'aiy/',
+		'filename': 'vocabulary.html'
+	},
+	{
+		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=DhLa7f6nRVrD8AZj9EGmFkyE8goTvQr0vPDb6WsdgtQ%3D&path=%2Fhomework%2Fpronunciation%2FYuliya%2Fpronunciation.pdf',
+		'path': 'aiy/',
+		'filename': 'yulia.pdf'
+	},
+	{
+		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=DhLa7f6nRVrD8AZj9EGmFkyE8goTvQr0vPDb6WsdgtQ%3D&path=%2Fhomework%2Fpronunciation%2FAydar%2Fpronunciation.pdf',
+		'path': 'aiy/',
+		'filename': 'aydar.pdf'
 	}
 ]
-checkUrl = 'https://cloud-api.yandex.net:443/v1/disk/public/resources?public_key=jDY08AP3zoSUx80EWqOBhduCV9KPdOMM41xsUOmKI7o%3D&fields=modified&path=%2Fhomework%2Frevision%2Fvocabulary%2Fpractice-and-check.html'
 
 def printlog(message):
 	message = "%s " + message
@@ -40,26 +54,4 @@ def download():
 			shutil.copyfileobj(response, out_file)
 		printlog('File downloaded ' + path + f['filename'])
 
-def isFileUpdated():
-	printlog('Check for updates')
-
-	modified = json.loads(urllib.request.urlopen(checkUrl).read().decode('utf-8'))['modified'];
-	printlog('Modified server date = ' + modified)
-	last_modified = ''
-	if os.path.exists('modified.date'):
-		f = open('modified.date', 'r')
-		last_modified = f.read()
-		f.close
-	printlog('Modified local date = ' + last_modified)
-	if (modified == last_modified):
-		printlog('Files not modified')
-		return False
-	else:
-		f = open('modified.date', 'w')
-		f.write(modified)
-		f.close()
-		printlog('Files were modified')
-		return True
-
-if (isFileUpdated()):
-	download()
+download()
