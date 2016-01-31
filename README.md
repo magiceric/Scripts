@@ -28,6 +28,7 @@ We have file with database identificators and would like to update data in table
 cat merge.csv | python3 partition.py 100 __id__ '","' 'UPDATE wm2.catalog_good SET yml_id=7841 WHERE yml_id=2816 AND own_id IN ("__id__"); COMMIT;' > wm2.catalog_good.sql
 ```
 Where:
+
 `merge.csv` -  file where you store identificators looks like:
 ```
 1
@@ -36,6 +37,7 @@ Where:
 45
 33
 ```
+100 - partiton size (how many ids should be in 1 update)
 
 
 
