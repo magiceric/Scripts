@@ -46,6 +46,9 @@
     padding: 20px;
     margin-bottom: 30px;
   }
+  .half {
+    width: 50%;
+  }
   .tile .title {
     margin-top: 0px;
   }
@@ -55,32 +58,43 @@
   .tile.purple {
     background: #5133AB;
   }
-  .tile.purple:hover {
-    background: #3e2784;
-  }
   .tile.red {
     background: #AC193D;
-  }
-  .tile.red:hover {
-    background: #7f132d;
   }
   .tile.green {
     background: #00A600;
   }
-  .tile.green:hover {
-    background: #007300;
-  }
   .tile.blue {
     background: #2672EC;
-  }
-  .tile.blue:hover {
-    background: #125acd;
   }
   .tile.orange {
     background: #DC572E;
   }
-  .tile.orange:hover {
-    background: #b8431f;
+
+  .tile input {
+    color: #000;
+  }
+
+  .correct {
+    font-size: 2em;
+    text-transform: uppercase;
+  }
+
+  .incorrect {
+    font-size: 2em;
+    text-transform: uppercase;
+  }
+
+  .spelling-missed {
+    font-size: 2em;
+    text-transform: uppercase;
+  }
+  .spelling-missed-symbol {
+    width: 1em;
+    text-transform: uppercase;
+  }
+  .translation {
+    color: #aaa;
   }
   </style>
 
@@ -91,6 +105,95 @@
         <h1><strong>Spelling</strong></h1>
       </div>
     </div>
+    <div class="row">
 
+    <div class="col-sm-3">
+      <div class="tile green">
+        <h3 class="title">Correct <span class='pull-right'>15</span></h3>
+        <p class=''>
+          TEST
+        </p>
+        <p class=''>
+          TEST
+        </p>
+        <p class=''>
+          TEST
+        </p>
+
+        <p class=''>
+          TEST
+        </p>
+        <p class=''>
+          TEST
+        </p>
+        <p class=''>
+          TEST
+        </p>
+        <p class=''>
+          TEST
+        </p>
+        <p class=''>
+          TEST
+        </p>
+        <p class=''>
+          TEST
+        </p>
+        <p class=''>
+          TEST
+        </p>
+        <p class=''>
+          TEST
+        </p>  
+      </div>
+
+    </div> 
+
+    <div class="col-sm-6">
+      <div class="tile blue">
+        <h3 class="title">Check</h3>
+        <p class='spelling-missed'>
+          s <input type='text' class='spelling-missed-symbol' maxlength=1/> E <input type='text' class='spelling-missed-symbol' maxlength=1/> L I <input type='text' class='spelling-missed-symbol' maxlength=1/> G 
+        </p>
+        <p>
+          <small class="pull-left translation">правописание</small>
+        <button class="btn btn-default pull-right" type="submit">NEXT</button>
+      </p>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="tile red">
+        <h3 class="title">Incorrect <span class='pull-right'>15</span></h3>
+        <p class=''>
+          TEST
+        </p>
+        <p class=''>
+          TEST
+        </p>
+        <p class=''>
+          TEST
+        </p>
+
+        <p class=''>
+          TEST
+        </p>
+        <p class=''>
+          TEST
+        </p><p class=''>
+          TEST
+        </p><p class=''>
+          TEST
+        </p><p class=''>
+          TEST
+        </p><p class=''>
+          TEST
+        </p><p class=''>
+          TEST
+        </p><p class=''>
+          TEST
+        </p>  
+      </div>
+    </div> 
+  </div>
 </body>
 </html>
