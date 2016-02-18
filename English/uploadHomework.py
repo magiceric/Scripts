@@ -22,9 +22,9 @@ files = [
 		'filename': 'slava.html'
 	},
 	{
-		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=DhLa7f6nRVrD8AZj9EGmFkyE8goTvQr0vPDb6WsdgtQ%3D&path=%2Fhomework%2Fvocabulary%2Fpractice-and-check.html',
+		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=DhLa7f6nRVrD8AZj9EGmFkyE8goTvQr0vPDb6WsdgtQ%3D&path=%2Fhomework%2Fvocabulary%2Fen-ru.html',
 		'path': 'aiy/',
-		'filename': 'en-ru.html'
+		'filename': 'vocabulary.html'
 	},
 	{
 		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=DhLa7f6nRVrD8AZj9EGmFkyE8goTvQr0vPDb6WsdgtQ%3D&path=%2Fhomework%2Fpronunciation%2FYuliya%2Fpronunciation.pdf',

@@ -4,9 +4,10 @@
   <title>English homework</title>
   <meta charset="UTF-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name=viewport content="width=device-width, init<ial-scale=1"/>
+  <meta name=viewport content="width=device-width, initial-scale=1"/>
   <link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 </head>
 <body>
   <style type="text/css">
@@ -149,13 +150,13 @@
     </div> 
 
     <div class="col-sm-6">
-      <div class="tile blue">
+      <div class="tile blue" id="check-tile">
         <h3 class="title">Check</h3>
         <p class='spelling-missed'>
           s <input type='text' class='spelling-missed-symbol' maxlength=1/> E <input type='text' class='spelling-missed-symbol' maxlength=1/> L I <input type='text' class='spelling-missed-symbol' maxlength=1/> G 
         </p>
         <p>
-          <small class="pull-left translation">правописание</small>
+          <small id="translation" class="pull-left translation">правописание</small>
         <button class="btn btn-default pull-right" type="submit">NEXT</button>
       </p>
       </div>
@@ -195,5 +196,42 @@
       </div>
     </div> 
   </div>
+  <script type="text/javascript">
+  words=[
+    {"word":"test", "translation": "тест"},
+    {"word":"singularity", "translation": "сингулярность"},
+    {"word":"infinity", "translation": "бесконечность"},
+    {"word":"cooking", "translation": "стряпня"},
+    {"word":"pronunciation", "translation": "произношение"},
+  ];
+  rate=0.6;
+
+  function nextWord() {
+    word = words[Math.floor(Math.random()*words.length)];
+   
+    $("#check-tile #translation").text(word.translation);
+  }
+
+  function getSymbolNumbers(length, rate) {
+    var arr = [];
+
+    while(arr.length < Math.round(length*rate)) {
+      var randomnumber=Math.ceil(Math.random()*length)
+      var found=false;
+      for(var i=0;i<arr.length;i++){
+        if(arr[i]==randomnumber) {
+          found=true;
+          break;
+        }
+      }
+      if(!found) {
+        arr[arr.length]=randomnumber;
+      }  
+    }
+
+    return arr;    
+  }
+  </script>
+
 </body>
 </html>
