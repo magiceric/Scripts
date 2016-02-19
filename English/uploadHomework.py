@@ -7,7 +7,7 @@ import datetime
 rootpath = os.environ['ENGLISH_PATH']
 files = [
 	{
-		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=jDY08AP3zoSUx80EWqOBhduCV9KPdOMM41xsUOmKI7o%253D&path=%2Fhomework%2Fvocabulary%2Fpractice-and-check.html',
+		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=jDY08AP3zoSUx80EWqOBhduCV9KPdOMM41xsUOmKI7o%253D&path=%2Fhomework%2Fvocabulary.html',
 		'path': 'div/',
 		'filename': 'vocabulary.html'
 	},
