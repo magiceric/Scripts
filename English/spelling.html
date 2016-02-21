@@ -8,6 +8,7 @@
   <link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 </head>
 <body>
   <style type="text/css">
@@ -86,12 +87,19 @@
     text-transform: uppercase;
   }
 
-  .spelling-missed {
+  .check-tile {
+    transition: top 1s ease-out 0.5s;
+  }
+
+  .check-tile .title {
+    text-transform: uppercase;
+  }
+  .check {
     font-size: 2em;
     text-transform: uppercase;
   }
-  .spelling-missed-symbol {
-    width: 1em;
+  .check input {
+    width: 100%;
     text-transform: uppercase;
   }
   .translation {
@@ -109,114 +117,211 @@
     <div class="row">
 
     <div class="col-sm-3">
-      <div class="tile green">
-        <h3 class="title">Correct <span class='pull-right'>15</span></h3>
-        <p class=''>
-          TEST
-        </p>
-        <p class=''>
-          TEST
-        </p>
-        <p class=''>
-          TEST
-        </p>
-
-        <p class=''>
-          TEST
-        </p>
-        <p class=''>
-          TEST
-        </p>
-        <p class=''>
-          TEST
-        </p>
-        <p class=''>
-          TEST
-        </p>
-        <p class=''>
-          TEST
-        </p>
-        <p class=''>
-          TEST
-        </p>
-        <p class=''>
-          TEST
-        </p>
-        <p class=''>
-          TEST
-        </p>  
+      <div id="tile-correct" class="tile green">
+        <h3 class="title">Correct <span id='correct-counter' class='pull-right'>0</span></h3>
       </div>
 
     </div> 
 
     <div class="col-sm-6">
-      <div class="tile blue" id="check-tile">
-        <h3 class="title">Check</h3>
-        <p class='spelling-missed'>
-          s <input type='text' class='spelling-missed-symbol' maxlength=1/> E <input type='text' class='spelling-missed-symbol' maxlength=1/> L I <input type='text' class='spelling-missed-symbol' maxlength=1/> G 
+      <div class="tile blue check-tile" id="check-tile">
+        <h3 id='check-title' class="title"></h3>
+        <form action="javascript:check();">
+        <p class='check'>
+          <input type='text' data-answer='spelling' id="check-input" autofocus/>
         </p>
         <p>
-          <small id="translation" class="pull-left translation">правописание</small>
+          <small id="translation" class="pull-left translation"></small>
         <button class="btn btn-default pull-right" type="submit">NEXT</button>
-      </p>
+        </p>
+      </form>
       </div>
     </div>
 
     <div class="col-sm-3">
-      <div class="tile red">
-        <h3 class="title">Incorrect <span class='pull-right'>15</span></h3>
-        <p class=''>
-          TEST
-        </p>
-        <p class=''>
-          TEST
-        </p>
-        <p class=''>
-          TEST
-        </p>
-
-        <p class=''>
-          TEST
-        </p>
-        <p class=''>
-          TEST
-        </p><p class=''>
-          TEST
-        </p><p class=''>
-          TEST
-        </p><p class=''>
-          TEST
-        </p><p class=''>
-          TEST
-        </p><p class=''>
-          TEST
-        </p><p class=''>
-          TEST
-        </p>  
+      <div id='tile-incorrect' class="tile red">
+        <h3 class="title">Incorrect <span id='incorrect-counter' class='pull-right'>0</span></h3>
       </div>
     </div> 
   </div>
+
+
   <script type="text/javascript">
   words=[
+    {"word":"else", "translation": "еще, кроме"},
+    {"word":"first", "translation": "впервые, в первый раз"},
+    {"word":"point", "translation": "балл"},
+    {"word":"auxiliary", "translation": "вспомогательный глагол"},
+    {"word":"cynical", "translation": "циничный"},
+    {"word":"straight", "translation": "прямо"},
+    {"word":"about", "translation": "около"},
+    {"word":"stressed", "translation": "испытывающий стресс"},
+    {"word":"drive", "translation": "ехать на машине (одно слово)"},
+    {"word":"rain", "translation": "дождить"},
+    {"word":"Chinese", "translation": "китайский"},
+    {"word":"jacket", "translation": "куртка"},
+    {"word":"exactly", "translation": "точно"},
+    {"word":"meet", "translation": "встречать"},
+    {"word":"quite", "translation": "довольно, вполне"},
+    {"word":"until", "translation": "до (при указании срока)"},
+    {"word":"recognize", "translation": "узнавать, опознавать"},
+    {"word":"curry", "translation": "карри"},
+    {"word":"card", "translation": "карточка"},
+    {"word":"store", "translation": "магазин"},
+    {"word":"how", "translation": "как"},
+    {"word":"heading", "translation": "заголовок"},
+    {"word":"subject", "translation": "подлежащее"},
+    {"word":"somebody", "translation": "кто-то"},
+    {"word":"Thai", "translation": "Тайский"},
+    {"word":"then", "translation": "затем"},
+    {"word":"order", "translation": "порядок"},
+    {"word":"rent", "translation": "арендовать"},
+    {"word":"aloud", "translation": "вслух"},
+    {"word":"shout", "translation": "кричать"},
+    {"word":"later", "translation": "позже"},
+    {"word":"past", "translation": "прошедший, прошлый"},
+    {"word":"retire", "translation": "выходить на пенсию"},
+    {"word":"probably", "translation": "вероятно"},
+    {"word":"woods", "translation": "лес"},
+    {"word":"complete", "translation": "завершать, дополнять"},
+    {"word":"in", "translation": "модный"},
+    {"word":"Beijing", "translation": "Пекин"},
+    {"word":"soda", "translation": "газированная вода"},
+    {"word":"windy", "translation": "ветреный"},
+    {"word":"letter", "translation": "буква"},
+    {"word":"capital", "translation": "заглавная (буква)"},
+    {"word":"laugh", "translation": "смеяться"},
+    {"word":"tell", "translation": "рассказывать"},
+    {"word":"normal", "translation": "обычный"},
+    {"word":"pocket", "translation": "карман"},
+    {"word":"finally", "translation": "наконец"},
+    {"word":"pronoun", "translation": "местоимение"},
+    {"word":"Chinese", "translation": "китаец, китаянка"},
+    {"word":"spelling", "translation": "правописание"},
+    {"word":"just", "translation": "просто, только"},
+    {"word":"teeth", "translation": "зубы"},
+    {"word":"connect", "translation": "соединять"},
+    {"word":"really", "translation": "очень (...ly)"},
+    {"word":"drive", "translation": "ехать на машине"},
+    {"word":"contract", "translation": "сокращать (грамматика)"},
+    {"word":"serve", "translation": "обслуживать"},
+    {"word":"most", "translation": "большинство (наречие)"},
+    {"word":"full", "translation": "полный"},
+    {"word":"art", "translation": "искусство"},
+    {"word":"along", "translation": "вдоль"},
+    {"word":"common", "translation": "распространенный"},
+    {"word":"conversation", "translation": "разговор, беседа"},
+    {"word":"interesting", "translation": "интересный"},
+    {"word":"relative", "translation": "относительный (грамматика)"},
+    {"word":"nowadays", "translation": "в настоящее время"},
+    {"word":"mouth", "translation": "рот"},
+    {"word":"grass", "translation": "трава"},
+    {"word":"boring", "translation": "скучный"},
+    {"word":"clown", "translation": "клоун"},
+    {"word":"contain", "translation": "содержать"},
+    {"word":"freeway", "translation": "автомагистраль"},
+    {"word":"box", "translation": "рамка (в тексте)"},
+    {"word":"cook", "translation": "повар"},
+    {"word":"irregular", "translation": "неправильный (грамматика)"},
+    {"word":"final", "translation": "последний, конечный"},
+    {"word":"definition", "translation": "определение"},
+    {"word":"missing", "translation": "отсутствующий"},
+    {"word":"delicious", "translation": "очень вкусный"},
+    {"word":"person", "translation": "лицо (грамматика)"},
+    {"word":"clause", "translation": "простое предложение в составе сложного"},
+    {"word":"Peruvian", "translation": "перуанец, перуанка "},
+    {"word":"define", "translation": "определять"},
+    {"word":"Colombian", "translation": "колумбиец, колумбийка "},
+    {"word":"stay", "translation": "оставаться, останавливаться (например, в гостинице)"},
+    {"word":"regular", "translation": "правильный (грамматика)"},
+    {"word":"object", "translation": "дополнение (член предложения)"},
+    {"word":"great-grandfather", "translation": "прадед"},
+    {"word":"hurt", "translation": "причинять боль"},
+    {"word":"wide", "translation": "широкий"},
+    {"word":"stepmother", "translation": "мачеха"},
+    {"word":"in-law", "translation": "родственник со стороны мужа или жены "},
+    {"word":"co-own", "translation": "совместно владеть"},
+    {"word":"demanding", "translation": "требовательный"},
+    {"word":"couple", "translation": "пара"},
+    {"word":"instant", "translation": "мгновенный"},
+    {"word":"intention", "translation": "намерение"},
+    {"word":"great-great-grandfather", "translation": "прапрадед"},
+    {"word":"introductory", "translation": "вводный"},
+    {"word":"cousin", "translation": "двоюродный брат, двоюродная сестра"},
+    {"word":"advantage", "translation": "преимущество"},
+    {"word":"whisper", "translation": "шептать"},
+    {"word":"great-great-grandmother", "translation": "прапрабабка"},
+    {"word":"half-brother", "translation": "единокровный брат"},
+    {"word":"arrangement", "translation": "договоренность, план"},
+    {"word":"defend", "translation": "защищать"},
+    {"word":"founder", "translation": "основатель"},
+    {"word":"pregnant", "translation": "беременная"},
+    {"word":"subject", "translation": "подлежащее"},
+    {"word":"book", "translation": "резервировать"},
+    {"word":"great-grandmother", "translation": "прабабка"},
+    {"word":"close", "translation": "близкий"},
+    {"word":"consider", "translation": "считать, полагать"},
+    {"word":"rhyme", "translation": "рифмоваться"},
+    {"word":"shape", "translation": "форма, очертание "},
+    {"word":"stepfather", "translation": "отчим"},
+    {"word":"clause", "translation": "простое предложение в составе сложного"},
+    {"word":"arrive", "translation": "прибывать"},
+    {"word":"arrangements", "translation": "приготовления"},
+    {"word":"introverted", "translation": "сосредоточенный на самом себе"},
+    {"word":"Tuesday", "translation": "вторник"},
+    {"word":"deaf", "translation": "глухой"},
+    {"word":"walk", "translation": "провожать пешком"},
+    {"word":"argument", "translation": "спор, ссора"},
+    {"word":"half-sister", "translation": "единокровная сестра"},
+    {"word":"thirsty", "translation": "испытывающий жажду"},
+    {"word":"admire", "translation": "восхищаться"},
+    {"word":"powerbocking", "translation": "бокинг"},
     {"word":"test", "translation": "тест"},
     {"word":"singularity", "translation": "сингулярность"},
     {"word":"infinity", "translation": "бесконечность"},
     {"word":"cooking", "translation": "стряпня"},
     {"word":"pronunciation", "translation": "произношение"},
   ];
-  rate=0.6;
+  rate=0.45;
+
+  function check() {
+    var value = $('#check-input').val();
+    var correct = $('#check-input').data('answer');
+    if (value.toUpperCase() === correct.toUpperCase()) {
+      $('#check-tile').switchClass('blue', 'green', 200).delay(200).switchClass('green', 'blue', 400);
+      $('#tile-correct').html($('#tile-correct').html()+'<p class="">'+value.toUpperCase()+'</p>');
+      $('#correct-counter').text(Number($('#correct-counter').text())+1);
+      nextWord();
+    } else {
+      $('#check-tile').switchClass('blue', 'red', 200).delay(200).switchClass('red', 'blue', 400);
+      $('#tile-incorrect').html($('#tile-incorrect').html()+'<p class="">' + value.toUpperCase()+'</p>');
+      $('#incorrect-counter').text(Number($('#incorrect-counter').text())+1);
+      nextWord();
+    }
+  }
 
   function nextWord() {
-    word = words[Math.floor(Math.random()*words.length)];
-   
+    var word = words[Math.floor(Math.random()*words.length)];
+    var checkWord = ''+word.word;
+
+    getSymbolNumbers(word.word.length, rate).forEach(function(index){
+      checkWord = replaceAt(checkWord, index, '–');
+    })
+
     $("#check-tile #translation").text(word.translation);
+    
+    $('#check-input').val('');
+    $('#check-input').data('answer', word.word);
+
+    $('#check-title').text(checkWord);
+    
   }
 
   function getSymbolNumbers(length, rate) {
     var arr = [];
 
     while(arr.length < Math.round(length*rate)) {
-      var randomnumber=Math.ceil(Math.random()*length)
+      var randomnumber=Math.ceil(Math.random()*(length-1))
       var found=false;
       for(var i=0;i<arr.length;i++){
         if(arr[i]==randomnumber) {
@@ -231,6 +336,15 @@
 
     return arr;    
   }
+
+  function replaceAt(string, index, symbol) {
+    return string.substring(0, index) + symbol + string.substring(index + 1);
+  }
+
+  $(document).ready(function() {
+    nextWord();
+  })
+
   </script>
 
 </body>

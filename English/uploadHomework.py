@@ -24,7 +24,12 @@ files = [
 	{
 		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=DhLa7f6nRVrD8AZj9EGmFkyE8goTvQr0vPDb6WsdgtQ%3D&path=%2Fhomework%2Fvocabulary%2Fen-ru.html',
 		'path': 'aiy/',
-		'filename': 'vocabulary.html'
+		'filename': 'en-ru.html'
+	},
+	{
+		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=DhLa7f6nRVrD8AZj9EGmFkyE8goTvQr0vPDb6WsdgtQ%3D&path=%2Fhomework%2Fvocabulary%2Fru-en.html',
+		'path': 'aiy/',
+		'filename': 'ru-en.html'
 	},
 	{
 		'url': 'https://cloud-api.yandex.net:443/v1/disk/public/resources/download?public_key=DhLa7f6nRVrD8AZj9EGmFkyE8goTvQr0vPDb6WsdgtQ%3D&path=%2Fhomework%2Fpronunciation%2FYuliya%2Fpronunciation.pdf',
