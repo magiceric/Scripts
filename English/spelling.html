@@ -305,7 +305,7 @@
     var checkWord = ''+word.word;
 
     getSymbolNumbers(word.word.length, rate).forEach(function(index){
-      checkWord = replaceAt(checkWord, index, '–');
+      checkWord = replaceAt(checkWord, index, "\u25A2");
     })
 
     $("#check-tile #translation").text(word.translation);
