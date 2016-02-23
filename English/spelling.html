@@ -109,6 +109,19 @@
   .check-tile .title .used {
     color: orange;
   }
+
+  #tile-incorrect p a{
+    color: white;
+    border-bottom: 1px dotted;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  #tile-incorrect p a:hover{
+    color: light-gray;
+    border-bottom: 1px dotted;
+    cursor: pointer;
+    text-decoration: none;
+  }
   </style>
 
   <div class="container">
@@ -130,7 +143,7 @@
     <div class="col-sm-6">
       <div class="tile blue check-tile" id="check-tile">
         <h3 id='check-title' class="title"></h3>
-        <form action="javascript:check();">
+        <form action="javascript:nextWord();">
         <p class='check'>
           <input type='text' data-answer='spelling' id="check-input" autocomplete='off' autofocus/>
         </p>
@@ -355,7 +368,6 @@
     for (var i = 0; i < n; i++) {
       $('#check-title #' + a[i]).not(".used").first().addClass('used');
     }  
-    console.log($('#check-input').val());
   }
 
   function check() {
@@ -366,18 +378,29 @@
       $('#check-tile').switchClass('blue', 'green', 200).delay(200).switchClass('green', 'blue', 400);
       $('#tile-correct').html($('#tile-correct').html()+'<p class="">'+value.toUpperCase()+'</p>');
       $('#correct-counter').text(Number($('#correct-counter').text())+1);
-      nextWord();
     
     } else {
 
       $('#check-tile').switchClass('blue', 'red', 200).delay(200).switchClass('red', 'blue', 400);
-      $('#tile-incorrect').html($('#tile-incorrect').html()+'<p class="">' + value.toUpperCase()+'</p>');
+      $('#tile-incorrect').html($('#tile-incorrect').html()+'<p id=a'+Math.random()*100000+' onclick="selectIncorrectWord(this)" data-question="' + escape($('#check-title').html()) + '" class="" data-answer="'+ correct +'" data-translation="'+ $("#check-tile #translation").text() +'"><a href="#">' + value.toUpperCase()+'<a></p>');
       $('#incorrect-counter').text(Number($('#incorrect-counter').text())+1);
-      nextWord();
+      
     }
   }
 
+  function selectIncorrectWord(object) {
+    setNewWord(unescape($(object).data('question')), $(object).data('answer'), $(object).data('translation'));
+    $('#check-input').val($(object).children('p a').text())
+
+     $(object).remove();
+    $('#incorrect-counter').text(Number($('#incorrect-counter').text())-1);
+  }
+
   function nextWord() {
+    check();
+    newWord();
+  }
+  function newWord() {
     var word = words[Math.floor(Math.random()*words.length)];
     if (Math.floor(Math.random()*2) === 0) {
       $('#check-input').keyup(function (event) {
@@ -400,7 +423,7 @@
   }
 
   $(document).ready(function() {
-    nextWord();
+    newWord();
   })
 
   </script>
