@@ -105,6 +105,10 @@
   .translation {
     color: #aaa;
   }
+
+  .check-tile .title .used {
+    color: orange;
+  }
   </style>
 
   <div class="container">
@@ -310,6 +314,16 @@
     return result;
   }
 
+  String.prototype.splitByCharAndWrap = function() {
+    var a = this.split(""),
+        n = a.length;
+    var result = '';
+    for(var i = 0; i < n; i++) {
+        result +='<span id="' + a[i] + '">' + a[i] + '</span>'
+    }
+    return result;
+  }
+
   function getSymbolNumbers(length, rate) {
     var arr = [];
 
@@ -330,15 +344,32 @@
     return arr;    
   }
 
+  function highlightChars() {
+     $('#check-title').children().each(function() {
+      $(this).removeClass('used');
+     })
+    var value = $('#check-input').val(),
+      a = value.split(""),
+      n = a.length;
+
+    for (var i = 0; i < n; i++) {
+      $('#check-title #' + a[i]).not(".used").first().addClass('used');
+    }  
+    console.log($('#check-input').val());
+  }
+
   function check() {
     var value = $('#check-input').val();
     var correct = $('#check-input').data('answer');
     if (value.toUpperCase() === correct.toUpperCase()) {
+    
       $('#check-tile').switchClass('blue', 'green', 200).delay(200).switchClass('green', 'blue', 400);
       $('#tile-correct').html($('#tile-correct').html()+'<p class="">'+value.toUpperCase()+'</p>');
       $('#correct-counter').text(Number($('#correct-counter').text())+1);
       nextWord();
+    
     } else {
+
       $('#check-tile').switchClass('blue', 'red', 200).delay(200).switchClass('red', 'blue', 400);
       $('#tile-incorrect').html($('#tile-incorrect').html()+'<p class="">' + value.toUpperCase()+'</p>');
       $('#incorrect-counter').text(Number($('#incorrect-counter').text())+1);
@@ -348,9 +379,15 @@
 
   function nextWord() {
     var word = words[Math.floor(Math.random()*words.length)];
-    var checkWord = Math.floor(Math.random()*2) === 0 ? word.word.shuffle() : word.word.missLetters();
-
-    setNewWord(checkWord, word.word, word.translation);
+    if (Math.floor(Math.random()*2) === 0) {
+      $('#check-input').keyup(function (event) {
+        highlightChars();
+      });
+      setNewWord(word.word.shuffle().splitByCharAndWrap(), word.word, word.translation);
+    } else {
+      $('#check-input').keypress(function() {return;});
+      setNewWord(word.word.missLetters(), word.word, word.translation);
+    }
   }
 
   function setNewWord(checkWord, answer, translation) {
@@ -359,7 +396,7 @@
     $('#check-input').val('');
     $('#check-input').data('answer', answer);
 
-    $('#check-title').text(checkWord);
+    $('#check-title').html(checkWord);
   }
 
   $(document).ready(function() {
