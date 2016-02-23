@@ -147,6 +147,8 @@
 
 
   <script type="text/javascript">
+  rate=0.45;
+
   words=[
     {"word":"else", "translation": "еще, кроме"},
     {"word":"first", "translation": "впервые, в первый раз"},
@@ -282,39 +284,30 @@
     {"word":"cooking", "translation": "стряпня"},
     {"word":"pronunciation", "translation": "произношение"},
   ];
-  rate=0.45;
 
-  function check() {
-    var value = $('#check-input').val();
-    var correct = $('#check-input').data('answer');
-    if (value.toUpperCase() === correct.toUpperCase()) {
-      $('#check-tile').switchClass('blue', 'green', 200).delay(200).switchClass('green', 'blue', 400);
-      $('#tile-correct').html($('#tile-correct').html()+'<p class="">'+value.toUpperCase()+'</p>');
-      $('#correct-counter').text(Number($('#correct-counter').text())+1);
-      nextWord();
-    } else {
-      $('#check-tile').switchClass('blue', 'red', 200).delay(200).switchClass('red', 'blue', 400);
-      $('#tile-incorrect').html($('#tile-incorrect').html()+'<p class="">' + value.toUpperCase()+'</p>');
-      $('#incorrect-counter').text(Number($('#incorrect-counter').text())+1);
-      nextWord();
-    }
+  String.prototype.replaceAt = function(index, symbol) {
+    return this.substring(0, index) + symbol + this.substring(index + 1);
   }
 
-  function nextWord() {
-    var word = words[Math.floor(Math.random()*words.length)];
-    var checkWord = ''+word.word;
+  String.prototype.shuffle = function () {
+    var a = this.split(""),
+        n = a.length;
 
-    getSymbolNumbers(word.word.length, rate).forEach(function(index){
-      checkWord = replaceAt(checkWord, index, "–");
+    for(var i = n - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+    return a.join("");
+  }
+
+  String.prototype.missLetters = function() {
+    var result = this;
+    getSymbolNumbers(this.length, rate).forEach(function(index){
+      result = result.replaceAt(index, "–");
     })
-
-    $("#check-tile #translation").text(word.translation);
-    
-    $('#check-input').val('');
-    $('#check-input').data('answer', word.word);
-
-    $('#check-title').text(checkWord);
-    
+    return result;
   }
 
   function getSymbolNumbers(length, rate) {
@@ -337,8 +330,36 @@
     return arr;    
   }
 
-  function replaceAt(string, index, symbol) {
-    return string.substring(0, index) + symbol + string.substring(index + 1);
+  function check() {
+    var value = $('#check-input').val();
+    var correct = $('#check-input').data('answer');
+    if (value.toUpperCase() === correct.toUpperCase()) {
+      $('#check-tile').switchClass('blue', 'green', 200).delay(200).switchClass('green', 'blue', 400);
+      $('#tile-correct').html($('#tile-correct').html()+'<p class="">'+value.toUpperCase()+'</p>');
+      $('#correct-counter').text(Number($('#correct-counter').text())+1);
+      nextWord();
+    } else {
+      $('#check-tile').switchClass('blue', 'red', 200).delay(200).switchClass('red', 'blue', 400);
+      $('#tile-incorrect').html($('#tile-incorrect').html()+'<p class="">' + value.toUpperCase()+'</p>');
+      $('#incorrect-counter').text(Number($('#incorrect-counter').text())+1);
+      nextWord();
+    }
+  }
+
+  function nextWord() {
+    var word = words[Math.floor(Math.random()*words.length)];
+    var checkWord = word.word.missLetters();
+
+    setNewWord(checkWord, word.word, word.translation);
+  }
+
+  function setNewWord(checkWord, answer, translation) {
+    $("#check-tile #translation").text(translation);
+    
+    $('#check-input').val('');
+    $('#check-input').data('answer', answer);
+
+    $('#check-title').text(checkWord);
   }
 
   $(document).ready(function() {
