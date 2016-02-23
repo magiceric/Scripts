@@ -348,7 +348,7 @@
 
   function nextWord() {
     var word = words[Math.floor(Math.random()*words.length)];
-    var checkWord = word.word.missLetters();
+    var checkWord = Math.floor(Math.random()*2) === 0 ? word.word.shuffle() : word.word.missLetters();
 
     setNewWord(checkWord, word.word, word.translation);
   }
