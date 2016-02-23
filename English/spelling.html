@@ -202,7 +202,8 @@
 
     <div class="col-sm-6">
       <div class="tile blue check-tile" id="check-tile">
-        <h3 id='check-title' class="title"></h3>
+        <h3 id='' class="title"><span id="check-title"></span></h3>
+
         <form action="javascript:nextWord();">
         <p class='check'>
           <input type='text' data-answer='spelling' id="check-input" autocomplete='off' autofocus/>
@@ -440,7 +441,7 @@
       $('#correct-counter').text(Number($('#correct-counter').text())+1);
     
     } else {
-      var v = value.length === 0 ? '---' : value.toUpperCase();
+      var v = value.length === 0 ? $('#check-title').text().toUpperCase() : value.toUpperCase();
       $('#check-tile').switchClass('blue', 'red', 200).delay(200).switchClass('red', 'blue', 400);
       $('#tile-incorrect').html($('#tile-incorrect').html()+'<p id=a'+Math.random()*100000+' onclick="selectIncorrectWord(this)" data-question="' + escape($('#check-title').html()) + '" class="" data-answer="'+ correct +'" data-value="'+ value +'" data-translation="'+ $("#check-tile #translation").text() +'"><a href="#">' + v +'<a></p>');
       $('#incorrect-counter').text(Number($('#incorrect-counter').text())+1);
@@ -454,6 +455,7 @@
 
      $(object).remove();
     $('#incorrect-counter').text(Number($('#incorrect-counter').text())-1);
+    $('#check-input').focus();
   }
 
   function nextWord() {
